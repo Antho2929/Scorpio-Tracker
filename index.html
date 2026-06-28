@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/antho/Downloads/index.html -->
-<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#060108">
 <title>Scorpio Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./Scorpio Tracker_files/css2" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#060108;
@@ -46,8 +46,7 @@
     padding:26px 16px 18px;
     position:relative;
     background:
-      linear-gradient(180deg, rgba(6,1,8,0.55), rgba(6,1,8,0.93)),
-      url('images/header-bg.jpg') center/cover no-repeat;
+      radial-gradient(circle at 50% -20%, rgba(155,93,229,0.35), rgba(6,1,8,0) 70%);
   }
   header::after{
     content:"";
@@ -254,8 +253,8 @@
   /* ---------- PROFIL hero background image ---------- */
   .card.profil-card-bg{
     background:
-      linear-gradient(160deg, rgba(16,10,22,0.86), rgba(22,13,32,0.93)),
-      url('images/profil-bg.jpg') center/cover no-repeat;
+      radial-gradient(circle at 50% 0%, rgba(155,93,229,0.3), rgba(16,10,22,0) 60%),
+      linear-gradient(160deg, var(--bg-card), var(--bg-card2));
   }
 
   /* ---------- SUCCES grid ---------- */
@@ -439,26 +438,25 @@
   .dragon-fly{
     position:fixed;
     top:30%;
-    left:-340px;
-    width:280px;
-    height:210px;
+    left:-200px;
+    width:160px;
+    height:160px;
     z-index:97;
     pointer-events:none;
     opacity:0;
-    filter:drop-shadow(0 0 35px rgba(155,93,229,0.85));
-  }
-  .dragon-fly img{
-    width:100%; height:100%;
-    object-fit:contain;
-    display:block;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:5.5rem;
+    filter:drop-shadow(0 0 35px rgba(155,93,229,0.9)) drop-shadow(0 0 60px rgba(201,166,255,0.6));
   }
   .dragon-fly.play{ animation:dragonCross 2.1s ease-in-out; }
   @keyframes dragonCross{
-    0%{ left:-340px; top:32%; opacity:0; transform:scale(0.7); }
+    0%{ left:-200px; top:32%; opacity:0; transform:scale(0.6) rotate(-6deg); }
     12%{ opacity:1; }
-    50%{ left:50%; transform:translateX(-50%) scale(1.08); top:26%; }
+    50%{ left:50%; transform:translateX(-50%) scale(1.15) rotate(0deg); top:26%; }
     88%{ opacity:1; }
-    100%{ left:110%; top:32%; opacity:0; transform:scale(0.7); }
+    100%{ left:110%; top:32%; opacity:0; transform:scale(0.6) rotate(6deg); }
   }
 
   /* ---------- ACHIEVEMENT MODAL ---------- */
@@ -502,7 +500,7 @@
 <div id="toast-wrap"></div>
 <div class="flash-overlay" id="flashOverlay"></div>
 <div class="rankup-overlay" id="rankupOverlay"></div>
-<div class="dragon-fly" id="dragonFly"><img src="file:///C:/Users/antho/Downloads/images/dragon.jpg" alt="dragon"></div>
+<div class="dragon-fly" id="dragonFly">🐉</div>
 
 <div class="modal-bg" id="achModal">
   <div class="modal-card">
@@ -535,7 +533,9 @@
     <div class="card">
       <h2>Nouvelle séance</h2>
       <label>Exercice / Discipline</label>
-      <select id="exoSelect" onchange="onExoSelectChange()"><option value="__new__">+ Nouvel exercice</option><option value="Épaules">Épaules</option><option value="Pectoraux">Pectoraux</option><option value="Dos">Dos</option><option value="Jambes">Jambes</option><option value="Bras">Bras</option><option value="Cardio">Cardio</option></select>
+      <select id="exoSelect" onchange="onExoSelectChange()">
+        <option value="__new__">+ Nouvel exercice</option>
+      </select>
       <input type="text" id="newExoInput" placeholder="Nom du nouvel exercice (ex: Développé épaule)" style="margin-top:10px; display:none;">
 
       <div class="row2">
@@ -560,85 +560,7 @@
   <section class="tab-content" id="tab-rangs">
     <div class="card">
       <h2>Rangs par discipline</h2>
-      <div id="rangsList">
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Épaules</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div>
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Pectoraux</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div>
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Dos</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div>
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Jambes</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div>
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Bras</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div>
-      <div class="exo-card">
-        <div class="exo-top">
-          <span class="exo-name">Cardio</span>
-          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
-        </div>
-        <div class="exo-bar-bg">
-          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
-        </div>
-        <div class="exo-meta">
-          <span>0 XP</span>
-          <span>100 XP → Argent</span>
-        </div>
-      </div></div>
+      <div id="rangsList"></div>
     </div>
   </section>
 
@@ -646,7 +568,7 @@
   <section class="tab-content" id="tab-journal">
     <div class="card">
       <h2>Journal des séances</h2>
-      <div id="journalList"><div class="empty-state">Aucune séance enregistrée encore.</div></div>
+      <div id="journalList"></div>
     </div>
   </section>
 
@@ -654,127 +576,7 @@
   <section class="tab-content" id="tab-succes">
     <div class="card">
       <h2>Panthéon des succès</h2>
-      <div class="ach-grid" id="achList"><div class="ach-section-label">Succès de rang</div>
-      <div class="ach-card ">
-        <div class="ach-icon">🪶</div>
-        <div class="ach-info">
-          <div class="ach-title">Disciple d'Hermès</div>
-          <div class="ach-desc">Premier pas vers la gloire. Rang Bronze atteint dans une discipline.</div>
-          <div class="ach-tier-tag">Rang Bronze</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">⚔️</div>
-        <div class="ach-info">
-          <div class="ach-title">Apprenti de Týr</div>
-          <div class="ach-desc">Le dieu nordique du courage reconnaît ta discipline naissante.</div>
-          <div class="ach-tier-tag">Rang Argent</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">☀️</div>
-        <div class="ach-info">
-          <div class="ach-title">Élu d'Apollon</div>
-          <div class="ach-desc">La lumière du dieu solaire grec brille sur tes progrès.</div>
-          <div class="ach-tier-tag">Rang Or</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">⚡</div>
-        <div class="ach-info">
-          <div class="ach-title">Berserker de Thor</div>
-          <div class="ach-desc">La force du tonnerre coule désormais dans tes veines.</div>
-          <div class="ach-tier-tag">Rang Platine</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🦉</div>
-        <div class="ach-info">
-          <div class="ach-title">Gardien d'Athéna</div>
-          <div class="ach-desc">Sagesse et puissance : la déesse grecque t'a choisi.</div>
-          <div class="ach-tier-tag">Rang Diamant</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🪽</div>
-        <div class="ach-info">
-          <div class="ach-title">Valkyrie Ascendante</div>
-          <div class="ach-desc">Les Valkyries t'escortent vers le Valhalla des champions.</div>
-          <div class="ach-tier-tag">Rang Champion</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🐉</div>
-        <div class="ach-info">
-          <div class="ach-title">Avatar d'Odin</div>
-          <div class="ach-desc">Le panthéon tout entier s'incline. Tu es devenu Légende.</div>
-          <div class="ach-tier-tag">Rang Légende</div>
-        </div>
-      </div><div class="ach-section-label">Succès d'exploit</div>
-      <div class="ach-card ">
-        <div class="ach-icon">🩸</div>
-        <div class="ach-info">
-          <div class="ach-title">Premier Sang</div>
-          <div class="ach-desc">Tu as enregistré ta première séance. Le voyage commence.</div>
-          
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">👑</div>
-        <div class="ach-info">
-          <div class="ach-title">Maître du Panthéon</div>
-          <div class="ach-desc">Trois disciplines portées au rang Légende. Un exploit divin.</div>
-          
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">💪</div>
-        <div class="ach-info">
-          <div class="ach-title">Force d'Héraclès</div>
-          <div class="ach-desc">225 au développé couché en une seule séance. La force du héros grec.</div>
-          <div class="ach-tier-tag">Pectoraux • 225+</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🐎</div>
-        <div class="ach-info">
-          <div class="ach-title">Vitesse de Sleipnir</div>
-          <div class="ach-desc">5 km parcourus en une seule séance de cardio, comme le cheval à huit pattes d'Odin.</div>
-          <div class="ach-tier-tag">Cardio • 5+</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🛡️</div>
-        <div class="ach-info">
-          <div class="ach-title">Bouclier d'Arès</div>
-          <div class="ach-desc">60 au développé épaule en une seule séance.</div>
-          <div class="ach-tier-tag">Épaules • 60+</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🐺</div>
-        <div class="ach-info">
-          <div class="ach-title">Force de Fenrir</div>
-          <div class="ach-desc">100 tirés au dos en une seule séance. La puissance du loup géant.</div>
-          <div class="ach-tier-tag">Dos • 100+</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">⛰️</div>
-        <div class="ach-info">
-          <div class="ach-title">Piliers d'Atlas</div>
-          <div class="ach-desc">140 au squat en une seule séance. Tu portes le poids du monde.</div>
-          <div class="ach-tier-tag">Jambes • 140+</div>
-        </div>
-      </div>
-      <div class="ach-card ">
-        <div class="ach-icon">🔥</div>
-        <div class="ach-info">
-          <div class="ach-title">Poigne de Loki</div>
-          <div class="ach-desc">30 en curl en une seule séance.</div>
-          <div class="ach-tier-tag">Bras • 30+</div>
-        </div>
-      </div></div>
+      <div class="ach-grid" id="achList"></div>
     </div>
   </section>
 
@@ -791,7 +593,7 @@
           <div class="stat-label">Séances</div>
         </div>
         <div class="stat-box">
-          <div class="stat-num" id="statExos">6</div>
+          <div class="stat-num" id="statExos">0</div>
           <div class="stat-label">Disciplines</div>
         </div>
         <div class="stat-box">
@@ -799,7 +601,7 @@
           <div class="stat-label">Rangs Légende</div>
         </div>
         <div class="stat-box">
-          <div class="stat-num" id="statAchUnlocked">0 / 15</div>
+          <div class="stat-num" id="statAchUnlocked">0</div>
           <div class="stat-label">Succès débloqués</div>
         </div>
       </div>
@@ -809,19 +611,19 @@
 </main>
 
 <nav>
-  <button class="nav-btn active" data-tab="tracker" onclick="switchTab(&#39;tracker&#39;)">
+  <button class="nav-btn active" data-tab="tracker" onclick="switchTab('tracker')">
     <span class="nav-icon">⚔️</span>Tracker
   </button>
-  <button class="nav-btn" data-tab="rangs" onclick="switchTab(&#39;rangs&#39;)">
+  <button class="nav-btn" data-tab="rangs" onclick="switchTab('rangs')">
     <span class="nav-icon">🛡️</span>Rangs
   </button>
-  <button class="nav-btn" data-tab="journal" onclick="switchTab(&#39;journal&#39;)">
+  <button class="nav-btn" data-tab="journal" onclick="switchTab('journal')">
     <span class="nav-icon">📅</span>Journal
   </button>
-  <button class="nav-btn" data-tab="succes" onclick="switchTab(&#39;succes&#39;)">
+  <button class="nav-btn" data-tab="succes" onclick="switchTab('succes')">
     <span class="nav-icon">🏆</span>Succès
   </button>
-  <button class="nav-btn" data-tab="profil" onclick="switchTab(&#39;profil&#39;)">
+  <button class="nav-btn" data-tab="profil" onclick="switchTab('profil')">
     <span class="nav-icon">👤</span>Profil
   </button>
 </nav>
@@ -1251,6 +1053,5 @@ saveData = function(){ _origSave(); renderGlobalBar(); };
 initApp();
 </script>
 
-
-
-</body></html>
+</body>
+</html>
