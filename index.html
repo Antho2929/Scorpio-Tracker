@@ -250,6 +250,83 @@
   .journal-perf{font-size:0.8rem; color:var(--mauve-light); font-weight:600;}
   .journal-xp{font-size:0.65rem; color:var(--text-dim); margin-top:2px;}
 
+  /* ---------- CHECK-UP (daily checklist + streak) ---------- */
+  .streak-hero{
+    text-align:center;
+    padding:6px 0 18px;
+  }
+  .streak-flame{
+    font-size:3.2rem;
+    filter:drop-shadow(0 0 18px rgba(255,140,60,0.7));
+    animation:flameFlicker 2.4s ease-in-out infinite;
+  }
+  @keyframes flameFlicker{
+    0%,100%{ transform:scale(1) rotate(-1deg); }
+    50%{ transform:scale(1.08) rotate(1deg); }
+  }
+  .streak-num{
+    font-family:'Cinzel', serif;
+    font-size:2.2rem;
+    font-weight:900;
+    color:var(--mauve-light);
+    text-shadow:0 0 16px rgba(155,93,229,0.7);
+    line-height:1;
+    margin-top:4px;
+  }
+  .streak-label{
+    font-size:0.7rem;
+    letter-spacing:1px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin-top:2px;
+  }
+  .checkup-status{
+    text-align:center;
+    font-size:0.75rem;
+    color:var(--text-dim);
+    margin-bottom:16px;
+  }
+  .check-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(155,93,229,0.2);
+    border-radius:14px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:all 0.25s ease;
+  }
+  .check-row.done{
+    border-color:rgba(155,93,229,0.7);
+    background:rgba(155,93,229,0.12);
+    box-shadow:0 0 14px rgba(155,93,229,0.25);
+  }
+  .check-box{
+    width:26px; height:26px;
+    border-radius:8px;
+    border:2px solid var(--mauve);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.95rem;
+    color:#fff;
+    transition:all 0.2s ease;
+  }
+  .check-row.done .check-box{
+    background:linear-gradient(135deg, var(--mauve-deep), var(--mauve));
+    box-shadow:0 0 10px rgba(155,93,229,0.7);
+  }
+  .check-label{
+    font-size:0.9rem;
+    font-weight:500;
+  }
+  .check-row.done .check-label{
+    color:var(--mauve-light);
+  }
+
   /* ---------- PROFIL hero background image ---------- */
   .card.profil-card-bg{
     background:
@@ -350,16 +427,16 @@
     border:none;
     color:var(--text-dim);
     font-family:'Poppins', sans-serif;
-    font-size:0.62rem;
-    letter-spacing:0.5px;
-    padding:10px 2px 8px;
+    font-size:0.56rem;
+    letter-spacing:0.3px;
+    padding:10px 1px 8px;
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:3px;
     cursor:pointer;
   }
-  .nav-btn .nav-icon{font-size:1.25rem;}
+  .nav-btn .nav-icon{font-size:1.1rem;}
   .nav-btn.active{color:var(--mauve-light);}
   .nav-btn.active .nav-icon{filter:drop-shadow(0 0 8px rgba(155,93,229,0.9));}
 
@@ -556,6 +633,19 @@
     </div>
   </section>
 
+  <!-- CHECK-UP TAB -->
+  <section class="tab-content" id="tab-checkup">
+    <div class="card">
+      <div class="streak-hero">
+        <div class="streak-flame">🔥</div>
+        <div class="streak-num" id="streakNum">0</div>
+        <div class="streak-label" id="streakLabel">jours de suite</div>
+      </div>
+      <div class="checkup-status" id="checkupStatus"></div>
+      <div id="checklistItems"></div>
+    </div>
+  </section>
+
   <!-- RANGS TAB -->
   <section class="tab-content" id="tab-rangs">
     <div class="card">
@@ -613,6 +703,9 @@
 <nav>
   <button class="nav-btn active" data-tab="tracker" onclick="switchTab('tracker')">
     <span class="nav-icon">⚔️</span>Tracker
+  </button>
+  <button class="nav-btn" data-tab="checkup" onclick="switchTab('checkup')">
+    <span class="nav-icon">✅</span>Check-Up
   </button>
   <button class="nav-btn" data-tab="rangs" onclick="switchTab('rangs')">
     <span class="nav-icon">🛡️</span>Rangs
@@ -681,29 +774,98 @@ const ACHIEVEMENTS = [
     desc:"30 en curl en une seule séance." }
 ];
 
+const CHECKLIST_ITEMS = [
+  { id:'eau',      icon:'💧', label:"Boire 3L d'eau" },
+  { id:'training', icon:'🏋️', label:"S'entraîner" },
+  { id:'proteine', icon:'🍗', label:"150g de protéines" },
+  { id:'cardio',   icon:'🏃', label:"Cardio" }
+];
+
 let data = loadData();
 
 function loadData(){
   const raw = localStorage.getItem(STORAGE_KEY);
+  let d = null;
   if(raw){
-    try { return JSON.parse(raw); } catch(e){ /* fallthrough */ }
+    try { d = JSON.parse(raw); } catch(e){ d = null; }
   }
-  return {
-    exercises: {
-      "Épaules":   { xp:0, logs:[] },
-      "Pectoraux": { xp:0, logs:[] },
-      "Dos":       { xp:0, logs:[] },
-      "Jambes":    { xp:0, logs:[] },
-      "Bras":      { xp:0, logs:[] },
-      "Cardio":    { xp:0, logs:[] }
-    },
-    achievementsUnlocked: [],
-    totalSessions: 0
-  };
+  if(!d){
+    d = {
+      exercises: {
+        "Épaules":   { xp:0, logs:[] },
+        "Pectoraux": { xp:0, logs:[] },
+        "Dos":       { xp:0, logs:[] },
+        "Jambes":    { xp:0, logs:[] },
+        "Bras":      { xp:0, logs:[] },
+        "Cardio":    { xp:0, logs:[] }
+      },
+      achievementsUnlocked: [],
+      totalSessions: 0
+    };
+  }
+  if(!d.checklist) d.checklist = { days: {} }; // migration for saves created before Check-Up existed
+  return d;
 }
 
 function saveData(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* ---------- Check-Up: daily checklist & flame streak ---------- */
+function dateKeyOffset(offsetDays){
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return d.toISOString().slice(0,10);
+}
+function isDayComplete(key){
+  const rec = data.checklist.days[key];
+  if(!rec) return false;
+  return CHECKLIST_ITEMS.every(item => rec[item.id]);
+}
+function calcStreak(){
+  // walk backward from yesterday as long as each day was fully completed
+  let base = 0;
+  let offset = -1;
+  while(isDayComplete(dateKeyOffset(offset))){
+    base++;
+    offset--;
+  }
+  // today only adds to the streak once it's actually completed
+  return isDayComplete(dateKeyOffset(0)) ? base + 1 : base;
+}
+function toggleChecklistItem(itemId){
+  const key = dateKeyOffset(0);
+  if(!data.checklist.days[key]) data.checklist.days[key] = {};
+  const rec = data.checklist.days[key];
+  const wasComplete = isDayComplete(key);
+  rec[itemId] = !rec[itemId];
+  saveData();
+  renderCheckup();
+  const nowComplete = isDayComplete(key);
+  if(!wasComplete && nowComplete){
+    playFlash();
+    const streak = calcStreak();
+    toast(`🔥 Checklist complétée — ${streak} jour${streak > 1 ? 's' : ''} de suite !`);
+  }
+}
+function renderCheckup(){
+  const key = dateKeyOffset(0);
+  const rec = data.checklist.days[key] || {};
+  const wrap = document.getElementById('checklistItems');
+  wrap.innerHTML = CHECKLIST_ITEMS.map(item => {
+    const done = !!rec[item.id];
+    return `
+      <div class="check-row ${done ? 'done' : ''}" onclick="toggleChecklistItem('${item.id}')">
+        <div class="check-box">${done ? '✓' : ''}</div>
+        <div class="check-label">${item.icon} ${item.label}</div>
+      </div>`;
+  }).join('');
+  const doneCount = CHECKLIST_ITEMS.filter(i => rec[i.id]).length;
+  document.getElementById('checkupStatus').textContent =
+    isDayComplete(key) ? "Aujourd'hui complété ✅" : `${doneCount} / ${CHECKLIST_ITEMS.length} complété aujourd'hui`;
+  const streak = calcStreak();
+  document.getElementById('streakNum').textContent = streak;
+  document.getElementById('streakLabel').textContent = streak === 1 ? 'jour de suite' : 'jours de suite';
 }
 
 /* ---------- Rank helpers ---------- */
@@ -751,6 +913,7 @@ function switchTab(tab){
   document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
   document.querySelector(`.nav-btn[data-tab="${tab}"]`).classList.add('active');
   playFlash();
+  if(tab === 'checkup') renderCheckup();
   if(tab === 'rangs') renderRangs();
   if(tab === 'journal') renderJournal();
   if(tab === 'succes') renderAchievements();
@@ -1040,6 +1203,7 @@ function initApp(){
   document.getElementById('dateInput').value = new Date().toISOString().slice(0,10);
   refreshExoSelect();
   renderGlobalBar();
+  renderCheckup();
   renderRangs();
   renderJournal();
   renderAchievements();
