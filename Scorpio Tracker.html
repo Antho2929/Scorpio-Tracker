@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/antho/Downloads/index.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#060108">
+<title>Scorpio Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Scorpio Tracker_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060108;
+    --bg-card:#100a16;
+    --bg-card2:#160d20;
+    --mauve:#9b5de5;
+    --mauve-light:#c9a6ff;
+    --mauve-deep:#5b2a99;
+    --pink:#ff5fa2;
+    --text:#ede5fb;
+    --text-dim:#9a86bd;
+    --bronze:#b08d57;
+    --argent:#c9c9d4;
+    --or:#e8c252;
+    --platine:#9fe6e0;
+    --diamant:#79e2ff;
+    --champion:#ff5fa2;
+    --legende:#c9a6ff;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 50% -10%, rgba(155,93,229,0.25) 0%, rgba(6,1,8,0) 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Poppins', sans-serif;
+    min-height:100vh;
+    padding-bottom:78px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Cinzel', serif; margin:0;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    text-align:center;
+    padding:26px 16px 18px;
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(6,1,8,0.55), rgba(6,1,8,0.93)),
+      url('images/header-bg.jpg') center/cover no-repeat;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:140px; height:1px;
+    background:linear-gradient(90deg, transparent, var(--mauve), transparent);
+  }
+  .app-title{
+    font-size:1.9rem;
+    font-weight:900;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    background:linear-gradient(90deg, #c9a6ff, #9b5de5, #c9a6ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 18px rgba(155,93,229,0.6);
+    animation:titleGlow 3s ease-in-out infinite;
+  }
+  @keyframes titleGlow{
+    0%,100%{ filter:drop-shadow(0 0 6px rgba(155,93,229,0.5)); }
+    50%{ filter:drop-shadow(0 0 18px rgba(201,166,255,0.9)); }
+  }
+  .app-subtitle{
+    font-size:0.7rem;
+    letter-spacing:2px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+
+  /* ---------- GLOBAL XP BAR (top, always visible) ---------- */
+  .global-xp-wrap{
+    max-width:480px;
+    margin:14px auto 0;
+    padding:0 18px;
+  }
+  .global-xp-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:0.72rem;
+    color:var(--text-dim);
+    margin-bottom:5px;
+  }
+  .global-level-badge{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    color:var(--mauve-light);
+    font-size:0.85rem;
+    letter-spacing:1px;
+  }
+  .global-xp-bar-bg{
+    height:10px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(155,93,229,0.3);
+    overflow:hidden;
+  }
+  .global-xp-bar-fill{
+    height:100%;
+    border-radius:8px;
+    background:linear-gradient(90deg, var(--mauve-deep), var(--mauve), var(--pink));
+    box-shadow:0 0 12px rgba(201,166,255,0.7);
+    transition:width 0.6s ease;
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+  main{
+    max-width:480px;
+    margin:0 auto;
+    padding:18px 16px 10px;
+  }
+  .tab-content{display:none; animation:fadeIn 0.35s ease;}
+  .tab-content.active{display:block;}
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .card{
+    background:linear-gradient(160deg, var(--bg-card), var(--bg-card2));
+    border:1px solid rgba(155,93,229,0.25);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:14px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  }
+  .card h2{
+    font-size:1rem;
+    color:var(--mauve-light);
+    letter-spacing:1px;
+    margin-bottom:14px;
+    text-transform:uppercase;
+  }
+
+  label{
+    display:block;
+    font-size:0.75rem;
+    color:var(--text-dim);
+    margin-bottom:6px;
+    margin-top:14px;
+  }
+  select, input{
+    width:100%;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(155,93,229,0.35);
+    border-radius:10px;
+    padding:11px 12px;
+    color:var(--text);
+    font-size:0.95rem;
+    font-family:'Poppins', sans-serif;
+  }
+  select:focus, input:focus{
+    outline:none;
+    border-color:var(--mauve-light);
+    box-shadow:0 0 0 3px rgba(155,93,229,0.2);
+  }
+  .row2{display:flex; gap:10px;}
+  .row2 > div{flex:1;}
+
+  button.primary{
+    width:100%;
+    margin-top:20px;
+    background:linear-gradient(135deg, var(--mauve-deep), var(--mauve));
+    color:#fff;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    font-size:0.95rem;
+    font-weight:600;
+    letter-spacing:0.5px;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(155,93,229,0.45);
+    transition:transform 0.15s ease;
+  }
+  button.primary:active{transform:scale(0.97);}
+
+  /* ---------- RANG cards ---------- */
+  .exo-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(155,93,229,0.18);
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:10px;
+  }
+  .exo-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  .exo-name{font-weight:600; font-size:0.95rem;}
+  .rank-badge{
+    font-family:'Cinzel', serif;
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:1px;
+    padding:4px 10px;
+    border-radius:20px;
+    text-transform:uppercase;
+  }
+  .exo-bar-bg{
+    height:8px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.06);
+    overflow:hidden;
+  }
+  .exo-bar-fill{
+    height:100%;
+    border-radius:6px;
+    transition:width 0.6s ease;
+  }
+  .exo-meta{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.65rem;
+    color:var(--text-dim);
+    margin-top:6px;
+  }
+  .empty-state{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    padding:30px 10px;
+  }
+
+  /* ---------- JOURNAL entries ---------- */
+  .journal-entry{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(155,93,229,0.18);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:8px;
+  }
+  .journal-exo{font-weight:600; font-size:0.85rem;}
+  .journal-date{font-size:0.65rem; color:var(--text-dim); margin-top:2px;}
+  .journal-stats{text-align:right;}
+  .journal-perf{font-size:0.8rem; color:var(--mauve-light); font-weight:600;}
+  .journal-xp{font-size:0.65rem; color:var(--text-dim); margin-top:2px;}
+
+  /* ---------- PROFIL hero background image ---------- */
+  .card.profil-card-bg{
+    background:
+      linear-gradient(160deg, rgba(16,10,22,0.86), rgba(22,13,32,0.93)),
+      url('images/profil-bg.jpg') center/cover no-repeat;
+  }
+
+  /* ---------- SUCCES grid ---------- */
+  .ach-grid{display:flex; flex-direction:column; gap:10px;}
+  .ach-card{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(155,93,229,0.18);
+    border-radius:14px;
+    padding:12px 14px;
+    opacity:0.4;
+    filter:grayscale(0.6);
+    transition:all 0.4s ease;
+  }
+  .ach-card.unlocked{
+    opacity:1;
+    filter:none;
+    border-color:rgba(201,166,255,0.6);
+    box-shadow:0 0 16px rgba(155,93,229,0.35);
+  }
+  .ach-icon{
+    width:42px; height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--mauve-deep), var(--mauve));
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem;
+    flex-shrink:0;
+  }
+  .ach-info{flex:1;}
+  .ach-title{font-family:'Cinzel', serif; font-size:0.82rem; font-weight:700; color:var(--mauve-light);}
+  .ach-desc{font-size:0.72rem; color:var(--text-dim); margin-top:2px;}
+  .ach-tier-tag{font-size:0.6rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-top:3px;}
+  .ach-section-label{
+    font-family:'Cinzel', serif;
+    font-size:0.72rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin:16px 0 8px;
+  }
+  .ach-section-label:first-child{ margin-top:0; }
+
+  /* ---------- PROFIL ---------- */
+  .profil-hero{
+    text-align:center;
+    padding:10px 0 4px;
+  }
+  .profil-level-num{
+    font-family:'Cinzel', serif;
+    font-size:3rem;
+    font-weight:900;
+    color:var(--mauve-light);
+    text-shadow:0 0 24px rgba(155,93,229,0.7);
+    line-height:1;
+  }
+  .profil-level-label{
+    font-size:0.7rem;
+    letter-spacing:2px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:16px;
+  }
+  .stat-box{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(155,93,229,0.2);
+    border-radius:12px;
+    padding:12px;
+    text-align:center;
+  }
+  .stat-num{font-family:'Cinzel', serif; font-size:1.3rem; color:var(--mauve-light); font-weight:700;}
+  .stat-label{font-size:0.65rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;}
+
+  /* ---------- NAV BAR ---------- */
+  nav{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:rgba(10,5,14,0.92);
+    backdrop-filter:blur(10px);
+    border-top:1px solid rgba(155,93,229,0.3);
+    display:flex;
+    z-index:60;
+  }
+  .nav-btn{
+    flex:1;
+    background:none;
+    border:none;
+    color:var(--text-dim);
+    font-family:'Poppins', sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.5px;
+    padding:10px 2px 8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    cursor:pointer;
+  }
+  .nav-btn .nav-icon{font-size:1.25rem;}
+  .nav-btn.active{color:var(--mauve-light);}
+  .nav-btn.active .nav-icon{filter:drop-shadow(0 0 8px rgba(155,93,229,0.9));}
+
+  /* ---------- TOAST ---------- */
+  #toast-wrap{
+    position:fixed;
+    top:14px; left:0; right:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    z-index:200;
+    pointer-events:none;
+  }
+  .toast{
+    background:rgba(20,10,28,0.95);
+    border:1px solid rgba(201,166,255,0.6);
+    color:var(--text);
+    padding:10px 18px;
+    border-radius:30px;
+    font-size:0.8rem;
+    font-weight:600;
+    box-shadow:0 0 20px rgba(155,93,229,0.5);
+    animation:toastIn 0.3s ease, toastOut 0.4s ease 2.2s forwards;
+  }
+  @keyframes toastIn{ from{opacity:0; transform:translateY(-12px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes toastOut{ to{opacity:0; transform:translateY(-12px);} }
+
+  /* ---------- LIGHT FLASH (tab switch / log) ---------- */
+  .flash-overlay{
+    position:fixed; inset:0;
+    background:radial-gradient(circle, #ffffff 0%, #c9a6ff 22%, rgba(155,93,229,0) 65%);
+    opacity:0;
+    pointer-events:none;
+    z-index:90;
+  }
+  .flash-overlay.play{ animation:flashPulse 0.55s ease-out; }
+  @keyframes flashPulse{
+    0%{ opacity:0; transform:scale(0.3); }
+    30%{ opacity:0.85; transform:scale(1); }
+    100%{ opacity:0; transform:scale(1.5); }
+  }
+
+  /* ---------- BIG RANK-UP EXPLOSION ---------- */
+  .rankup-overlay{
+    position:fixed; inset:0;
+    background:radial-gradient(circle, #ffffff 0%, #c9a6ff 20%, rgba(91,42,153,0.4) 45%, rgba(6,1,8,0) 70%);
+    opacity:0;
+    pointer-events:none;
+    z-index:95;
+  }
+  .rankup-overlay.play{ animation:rankFlash 1s ease-out; }
+  @keyframes rankFlash{
+    0%{ opacity:0; transform:scale(0.2); }
+    25%{ opacity:1; transform:scale(1.1); }
+    100%{ opacity:0; transform:scale(2); }
+  }
+  .spark{
+    position:fixed;
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--mauve-light);
+    box-shadow:0 0 10px 3px rgba(201,166,255,0.9);
+    top:50%; left:50%;
+    pointer-events:none;
+    z-index:96;
+    opacity:0;
+  }
+  .spark.play{ animation:sparkFly 0.9s ease-out forwards; }
+  @keyframes sparkFly{
+    0%{ opacity:1; transform:translate(0,0) scale(1); }
+    100%{ opacity:0; transform:translate(var(--dx), var(--dy)) scale(0.2); }
+  }
+
+  /* ---------- DRAGON FLIGHT (rank-up signature effect) ---------- */
+  .dragon-fly{
+    position:fixed;
+    top:30%;
+    left:-340px;
+    width:280px;
+    height:210px;
+    z-index:97;
+    pointer-events:none;
+    opacity:0;
+    filter:drop-shadow(0 0 35px rgba(155,93,229,0.85));
+  }
+  .dragon-fly img{
+    width:100%; height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .dragon-fly.play{ animation:dragonCross 2.1s ease-in-out; }
+  @keyframes dragonCross{
+    0%{ left:-340px; top:32%; opacity:0; transform:scale(0.7); }
+    12%{ opacity:1; }
+    50%{ left:50%; transform:translateX(-50%) scale(1.08); top:26%; }
+    88%{ opacity:1; }
+    100%{ left:110%; top:32%; opacity:0; transform:scale(0.7); }
+  }
+
+  /* ---------- ACHIEVEMENT MODAL ---------- */
+  .modal-bg{
+    position:fixed; inset:0;
+    background:rgba(4,0,6,0.82);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:150;
+    padding:24px;
+  }
+  .modal-bg.show{display:flex;}
+  .modal-card{
+    background:linear-gradient(160deg, var(--bg-card2), #0c0610);
+    border:1px solid var(--mauve-light);
+    border-radius:20px;
+    padding:30px 24px;
+    text-align:center;
+    max-width:340px;
+    box-shadow:0 0 50px rgba(155,93,229,0.6);
+    animation:modalPop 0.5s ease;
+  }
+  @keyframes modalPop{
+    0%{ opacity:0; transform:scale(0.7); }
+    100%{ opacity:1; transform:scale(1); }
+  }
+  .modal-card .ach-icon{ width:64px; height:64px; font-size:2rem; margin:0 auto 14px; }
+  .modal-card h3{ font-family:'Cinzel', serif; color:var(--mauve-light); font-size:1.1rem; margin-bottom:8px; }
+  .modal-card p{ font-size:0.82rem; color:var(--text-dim); margin-bottom:20px; }
+  .modal-card button{
+    background:linear-gradient(135deg, var(--mauve-deep), var(--mauve));
+    color:#fff; border:none; padding:10px 26px;
+    border-radius:30px; font-size:0.85rem; cursor:pointer;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="toast-wrap"></div>
+<div class="flash-overlay" id="flashOverlay"></div>
+<div class="rankup-overlay" id="rankupOverlay"></div>
+<div class="dragon-fly" id="dragonFly"><img src="file:///C:/Users/antho/Downloads/images/dragon.jpg" alt="dragon"></div>
+
+<div class="modal-bg" id="achModal">
+  <div class="modal-card">
+    <div class="ach-icon" id="achModalIcon">⚡</div>
+    <h3 id="achModalTitle">Succès débloqué</h3>
+    <p id="achModalDesc"></p>
+    <button onclick="closeAchModal()">Continuer</button>
+  </div>
+</div>
+
+<header>
+  <div class="app-title">Scorpio Tracker</div>
+  <div class="app-subtitle">Forge ta légende</div>
+</header>
+
+<div class="global-xp-wrap">
+  <div class="global-xp-row">
+    <span class="global-level-badge" id="globalLevelLabel">Niveau 1</span>
+    <span id="globalXpLabel">0 / 150 XP</span>
+  </div>
+  <div class="global-xp-bar-bg">
+    <div class="global-xp-bar-fill" id="globalXpFill" style="width:0%"></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- TRACKER TAB -->
+  <section class="tab-content active" id="tab-tracker">
+    <div class="card">
+      <h2>Nouvelle séance</h2>
+      <label>Exercice / Discipline</label>
+      <select id="exoSelect" onchange="onExoSelectChange()"><option value="__new__">+ Nouvel exercice</option><option value="Épaules">Épaules</option><option value="Pectoraux">Pectoraux</option><option value="Dos">Dos</option><option value="Jambes">Jambes</option><option value="Bras">Bras</option><option value="Cardio">Cardio</option></select>
+      <input type="text" id="newExoInput" placeholder="Nom du nouvel exercice (ex: Développé épaule)" style="margin-top:10px; display:none;">
+
+      <div class="row2">
+        <div>
+          <label>Performance (kg / km / etc.)</label>
+          <input type="number" id="perfInput" placeholder="ex: 40" min="0" step="0.5">
+        </div>
+        <div>
+          <label>Répétitions</label>
+          <input type="number" id="repsInput" placeholder="1" min="1" step="1" value="1">
+        </div>
+      </div>
+
+      <label>Date</label>
+      <input type="date" id="dateInput">
+
+      <button class="primary" onclick="logSession()">Enregistrer la séance</button>
+    </div>
+  </section>
+
+  <!-- RANGS TAB -->
+  <section class="tab-content" id="tab-rangs">
+    <div class="card">
+      <h2>Rangs par discipline</h2>
+      <div id="rangsList">
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Épaules</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div>
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Pectoraux</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div>
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Dos</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div>
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Jambes</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div>
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Bras</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div>
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">Cardio</span>
+          <span class="rank-badge" style="background:#b08d5722; color:#b08d57; border:1px solid #b08d5766;">Bronze</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:0%; background:#b08d57; box-shadow:0 0 8px #b08d57;"></div>
+        </div>
+        <div class="exo-meta">
+          <span>0 XP</span>
+          <span>100 XP → Argent</span>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- JOURNAL TAB -->
+  <section class="tab-content" id="tab-journal">
+    <div class="card">
+      <h2>Journal des séances</h2>
+      <div id="journalList"><div class="empty-state">Aucune séance enregistrée encore.</div></div>
+    </div>
+  </section>
+
+  <!-- SUCCES TAB -->
+  <section class="tab-content" id="tab-succes">
+    <div class="card">
+      <h2>Panthéon des succès</h2>
+      <div class="ach-grid" id="achList"><div class="ach-section-label">Succès de rang</div>
+      <div class="ach-card ">
+        <div class="ach-icon">🪶</div>
+        <div class="ach-info">
+          <div class="ach-title">Disciple d'Hermès</div>
+          <div class="ach-desc">Premier pas vers la gloire. Rang Bronze atteint dans une discipline.</div>
+          <div class="ach-tier-tag">Rang Bronze</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">⚔️</div>
+        <div class="ach-info">
+          <div class="ach-title">Apprenti de Týr</div>
+          <div class="ach-desc">Le dieu nordique du courage reconnaît ta discipline naissante.</div>
+          <div class="ach-tier-tag">Rang Argent</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">☀️</div>
+        <div class="ach-info">
+          <div class="ach-title">Élu d'Apollon</div>
+          <div class="ach-desc">La lumière du dieu solaire grec brille sur tes progrès.</div>
+          <div class="ach-tier-tag">Rang Or</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">⚡</div>
+        <div class="ach-info">
+          <div class="ach-title">Berserker de Thor</div>
+          <div class="ach-desc">La force du tonnerre coule désormais dans tes veines.</div>
+          <div class="ach-tier-tag">Rang Platine</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🦉</div>
+        <div class="ach-info">
+          <div class="ach-title">Gardien d'Athéna</div>
+          <div class="ach-desc">Sagesse et puissance : la déesse grecque t'a choisi.</div>
+          <div class="ach-tier-tag">Rang Diamant</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🪽</div>
+        <div class="ach-info">
+          <div class="ach-title">Valkyrie Ascendante</div>
+          <div class="ach-desc">Les Valkyries t'escortent vers le Valhalla des champions.</div>
+          <div class="ach-tier-tag">Rang Champion</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🐉</div>
+        <div class="ach-info">
+          <div class="ach-title">Avatar d'Odin</div>
+          <div class="ach-desc">Le panthéon tout entier s'incline. Tu es devenu Légende.</div>
+          <div class="ach-tier-tag">Rang Légende</div>
+        </div>
+      </div><div class="ach-section-label">Succès d'exploit</div>
+      <div class="ach-card ">
+        <div class="ach-icon">🩸</div>
+        <div class="ach-info">
+          <div class="ach-title">Premier Sang</div>
+          <div class="ach-desc">Tu as enregistré ta première séance. Le voyage commence.</div>
+          
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">👑</div>
+        <div class="ach-info">
+          <div class="ach-title">Maître du Panthéon</div>
+          <div class="ach-desc">Trois disciplines portées au rang Légende. Un exploit divin.</div>
+          
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">💪</div>
+        <div class="ach-info">
+          <div class="ach-title">Force d'Héraclès</div>
+          <div class="ach-desc">225 au développé couché en une seule séance. La force du héros grec.</div>
+          <div class="ach-tier-tag">Pectoraux • 225+</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🐎</div>
+        <div class="ach-info">
+          <div class="ach-title">Vitesse de Sleipnir</div>
+          <div class="ach-desc">5 km parcourus en une seule séance de cardio, comme le cheval à huit pattes d'Odin.</div>
+          <div class="ach-tier-tag">Cardio • 5+</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🛡️</div>
+        <div class="ach-info">
+          <div class="ach-title">Bouclier d'Arès</div>
+          <div class="ach-desc">60 au développé épaule en une seule séance.</div>
+          <div class="ach-tier-tag">Épaules • 60+</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🐺</div>
+        <div class="ach-info">
+          <div class="ach-title">Force de Fenrir</div>
+          <div class="ach-desc">100 tirés au dos en une seule séance. La puissance du loup géant.</div>
+          <div class="ach-tier-tag">Dos • 100+</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">⛰️</div>
+        <div class="ach-info">
+          <div class="ach-title">Piliers d'Atlas</div>
+          <div class="ach-desc">140 au squat en une seule séance. Tu portes le poids du monde.</div>
+          <div class="ach-tier-tag">Jambes • 140+</div>
+        </div>
+      </div>
+      <div class="ach-card ">
+        <div class="ach-icon">🔥</div>
+        <div class="ach-info">
+          <div class="ach-title">Poigne de Loki</div>
+          <div class="ach-desc">30 en curl en une seule séance.</div>
+          <div class="ach-tier-tag">Bras • 30+</div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- PROFIL TAB -->
+  <section class="tab-content" id="tab-profil">
+    <div class="card profil-card-bg">
+      <div class="profil-hero">
+        <div class="profil-level-num" id="profilLevelNum">1</div>
+        <div class="profil-level-label">Niveau Global</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-num" id="statSessions">0</div>
+          <div class="stat-label">Séances</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statExos">6</div>
+          <div class="stat-label">Disciplines</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statLegendes">0</div>
+          <div class="stat-label">Rangs Légende</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="statAchUnlocked">0 / 15</div>
+          <div class="stat-label">Succès débloqués</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav>
+  <button class="nav-btn active" data-tab="tracker" onclick="switchTab(&#39;tracker&#39;)">
+    <span class="nav-icon">⚔️</span>Tracker
+  </button>
+  <button class="nav-btn" data-tab="rangs" onclick="switchTab(&#39;rangs&#39;)">
+    <span class="nav-icon">🛡️</span>Rangs
+  </button>
+  <button class="nav-btn" data-tab="journal" onclick="switchTab(&#39;journal&#39;)">
+    <span class="nav-icon">📅</span>Journal
+  </button>
+  <button class="nav-btn" data-tab="succes" onclick="switchTab(&#39;succes&#39;)">
+    <span class="nav-icon">🏆</span>Succès
+  </button>
+  <button class="nav-btn" data-tab="profil" onclick="switchTab(&#39;profil&#39;)">
+    <span class="nav-icon">👤</span>Profil
+  </button>
+</nav>
+
+<script>
+/* =========================================================
+   SCORPIO TRACKER — Data model & logic
+   ========================================================= */
+
+const STORAGE_KEY = 'scorpioTrackerData';
+
+const RANK_TIERS = [
+  { name:'Bronze',  min:0,    color:'#b08d57' },
+  { name:'Argent',  min:100,  color:'#c9c9d4' },
+  { name:'Or',      min:300,  color:'#e8c252' },
+  { name:'Platine', min:600,  color:'#9fe6e0' },
+  { name:'Diamant', min:1000, color:'#79e2ff' },
+  { name:'Champion',min:1500, color:'#ff5fa2' },
+  { name:'Légende', min:2200, color:'#c9a6ff' }
+];
+
+const ACHIEVEMENTS = [
+  // ---- Succès de rang (débloqués au premier passage de palier) ----
+  { id:'first_log', category:'exploit', title:"Premier Sang",        icon:'🩸', tier:null,
+    desc:"Tu as enregistré ta première séance. Le voyage commence." },
+  { id:'Bronze',     category:'rang', title:"Disciple d'Hermès",       icon:'🪶', tier:'Bronze',
+    desc:"Premier pas vers la gloire. Rang Bronze atteint dans une discipline." },
+  { id:'Argent',     category:'rang', title:"Apprenti de Týr",         icon:'⚔️', tier:'Argent',
+    desc:"Le dieu nordique du courage reconnaît ta discipline naissante." },
+  { id:'Or',         category:'rang', title:"Élu d'Apollon",           icon:'☀️', tier:'Or',
+    desc:"La lumière du dieu solaire grec brille sur tes progrès." },
+  { id:'Platine',    category:'rang', title:"Berserker de Thor",       icon:'⚡', tier:'Platine',
+    desc:"La force du tonnerre coule désormais dans tes veines." },
+  { id:'Diamant',    category:'rang', title:"Gardien d'Athéna",        icon:'🦉', tier:'Diamant',
+    desc:"Sagesse et puissance : la déesse grecque t'a choisi." },
+  { id:'Champion',   category:'rang', title:"Valkyrie Ascendante",     icon:'🪽', tier:'Champion',
+    desc:"Les Valkyries t'escortent vers le Valhalla des champions." },
+  { id:'Légende',    category:'rang', title:"Avatar d'Odin",           icon:'🐉', tier:'Légende',
+    desc:"Le panthéon tout entier s'incline. Tu es devenu Légende." },
+  { id:'triple_legende', category:'exploit', title:"Maître du Panthéon", icon:'👑', tier:null,
+    desc:"Trois disciplines portées au rang Légende. Un exploit divin." },
+
+  // ---- Succès d'exploit (débloqués par une performance précise, peu importe le rang) ----
+  { id:'bench_225',  category:'exploit', exo:'Pectoraux', minPerf:225, title:"Force d'Héraclès", icon:'💪',
+    desc:"225 au développé couché en une seule séance. La force du héros grec." },
+  { id:'cardio_5k',  category:'exploit', exo:'Cardio',    minPerf:5,   title:"Vitesse de Sleipnir", icon:'🐎',
+    desc:"5 km parcourus en une seule séance de cardio, comme le cheval à huit pattes d'Odin." },
+  { id:'epaule_60',  category:'exploit', exo:'Épaules',   minPerf:60,  title:"Bouclier d'Arès", icon:'🛡️',
+    desc:"60 au développé épaule en une seule séance." },
+  { id:'dos_100',    category:'exploit', exo:'Dos',       minPerf:100, title:"Force de Fenrir", icon:'🐺',
+    desc:"100 tirés au dos en une seule séance. La puissance du loup géant." },
+  { id:'jambes_140', category:'exploit', exo:'Jambes',    minPerf:140, title:"Piliers d'Atlas", icon:'⛰️',
+    desc:"140 au squat en une seule séance. Tu portes le poids du monde." },
+  { id:'bras_30',    category:'exploit', exo:'Bras',      minPerf:30,  title:"Poigne de Loki", icon:'🔥',
+    desc:"30 en curl en une seule séance." }
+];
+
+let data = loadData();
+
+function loadData(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try { return JSON.parse(raw); } catch(e){ /* fallthrough */ }
+  }
+  return {
+    exercises: {
+      "Épaules":   { xp:0, logs:[] },
+      "Pectoraux": { xp:0, logs:[] },
+      "Dos":       { xp:0, logs:[] },
+      "Jambes":    { xp:0, logs:[] },
+      "Bras":      { xp:0, logs:[] },
+      "Cardio":    { xp:0, logs:[] }
+    },
+    achievementsUnlocked: [],
+    totalSessions: 0
+  };
+}
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* ---------- Rank helpers ---------- */
+function getRankIndex(xp){
+  let idx = 0;
+  for(let i=0;i<RANK_TIERS.length;i++){
+    if(xp >= RANK_TIERS[i].min) idx = i;
+  }
+  return idx;
+}
+function getRank(xp){ return RANK_TIERS[getRankIndex(xp)]; }
+function getNextTier(xp){
+  const idx = getRankIndex(xp);
+  return idx < RANK_TIERS.length-1 ? RANK_TIERS[idx+1] : null;
+}
+function getProgressPercent(xp){
+  const idx = getRankIndex(xp);
+  const cur = RANK_TIERS[idx];
+  const next = getNextTier(xp);
+  if(!next) return 100;
+  return Math.min(100, Math.round(((xp - cur.min) / (next.min - cur.min)) * 100));
+}
+
+/* ---------- Global level (sum of all exercise XP) ---------- */
+function getTotalXP(){
+  return Object.values(data.exercises).reduce((sum, e) => sum + e.xp, 0);
+}
+// XP required to go from level n to n+1 grows linearly: 150 * n
+function getLevelInfo(totalXP){
+  let level = 1;
+  let xpConsumed = 0;
+  let needed = 150 * level;
+  while(totalXP - xpConsumed >= needed){
+    xpConsumed += needed;
+    level++;
+    needed = 150 * level;
+  }
+  return { level, current: totalXP - xpConsumed, needed };
+}
+
+/* ---------- Tab switching ---------- */
+function switchTab(tab){
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.nav-btn[data-tab="${tab}"]`).classList.add('active');
+  playFlash();
+  if(tab === 'rangs') renderRangs();
+  if(tab === 'journal') renderJournal();
+  if(tab === 'succes') renderAchievements();
+  if(tab === 'profil') renderProfil();
+}
+
+/* ---------- Exercise select dropdown ---------- */
+function refreshExoSelect(){
+  const sel = document.getElementById('exoSelect');
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="__new__">+ Nouvel exercice</option>';
+  Object.keys(data.exercises).forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+  if(Object.keys(data.exercises).includes(currentVal)){
+    sel.value = currentVal;
+  } else if(Object.keys(data.exercises).length){
+    sel.value = Object.keys(data.exercises)[0];
+  }
+  onExoSelectChange();
+}
+function onExoSelectChange(){
+  const sel = document.getElementById('exoSelect');
+  document.getElementById('newExoInput').style.display = (sel.value === '__new__') ? 'block' : 'none';
+}
+
+/* ---------- Logging a session ---------- */
+function logSession(){
+  const sel = document.getElementById('exoSelect');
+  let exoName = sel.value;
+  if(exoName === '__new__'){
+    exoName = document.getElementById('newExoInput').value.trim();
+    if(!exoName){
+      toast("Donne un nom à ta discipline.");
+      return;
+    }
+    if(!data.exercises[exoName]){
+      data.exercises[exoName] = { xp:0, logs:[] };
+    }
+  }
+
+  const perf = parseFloat(document.getElementById('perfInput').value);
+  const reps = parseInt(document.getElementById('repsInput').value) || 1;
+  const date = document.getElementById('dateInput').value || new Date().toISOString().slice(0,10);
+
+  if(isNaN(perf) || perf <= 0){
+    toast("Entre une performance valide.");
+    return;
+  }
+
+  const xpGain = Math.max(1, Math.round(perf * reps * 0.1));
+  const before = data.exercises[exoName].xp;
+  data.exercises[exoName].xp += xpGain;
+  data.exercises[exoName].logs.push({ date, perf, reps, xpGain, ts: Date.now() });
+  data.totalSessions++;
+
+  const rankBefore = getRank(before).name;
+  const rankAfter  = getRank(data.exercises[exoName].xp).name;
+
+  saveData();
+  refreshExoSelect();
+  document.getElementById('newExoInput').value = '';
+  document.getElementById('perfInput').value = '';
+  document.getElementById('repsInput').value = '1';
+
+  toast(`+${xpGain} XP — ${exoName}`);
+  playFlash();
+
+  // first log achievement
+  unlockAchievement('first_log');
+
+  // exploit-based achievements tied to a specific exercise + performance value
+  checkMilestoneAchievements(exoName, perf);
+
+  if(rankBefore !== rankAfter){
+    setTimeout(() => {
+      triggerRankUp(exoName, rankAfter);
+      unlockAchievement(rankAfter);
+      checkTripleLegende();
+    }, 350);
+  }
+}
+
+function checkTripleLegende(){
+  const legendCount = Object.values(data.exercises).filter(e => getRank(e.xp).name === 'Légende').length;
+  if(legendCount >= 3) unlockAchievement('triple_legende');
+}
+
+function checkMilestoneAchievements(exoName, perf){
+  ACHIEVEMENTS
+    .filter(a => a.exo && a.exo.toLowerCase() === exoName.toLowerCase() && perf >= a.minPerf)
+    .forEach(a => unlockAchievement(a.id));
+}
+
+/* ---------- Render: Rangs tab ---------- */
+function renderRangs(){
+  const wrap = document.getElementById('rangsList');
+  const entries = Object.entries(data.exercises);
+  if(!entries.length){
+    wrap.innerHTML = '<div class="empty-state">Aucune discipline encore. Va dans Tracker pour commencer.</div>';
+    return;
+  }
+  wrap.innerHTML = entries.map(([name, ex]) => {
+    const rank = getRank(ex.xp);
+    const pct = getProgressPercent(ex.xp);
+    const next = getNextTier(ex.xp);
+    return `
+      <div class="exo-card">
+        <div class="exo-top">
+          <span class="exo-name">${escapeHtml(name)}</span>
+          <span class="rank-badge" style="background:${rank.color}22; color:${rank.color}; border:1px solid ${rank.color}66;">${rank.name}</span>
+        </div>
+        <div class="exo-bar-bg">
+          <div class="exo-bar-fill" style="width:${pct}%; background:${rank.color}; box-shadow:0 0 8px ${rank.color};"></div>
+        </div>
+        <div class="exo-meta">
+          <span>${ex.xp} XP</span>
+          <span>${next ? (next.min - ex.xp) + ' XP → ' + next.name : 'Rang maximal'}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ---------- Render: Journal tab ---------- */
+function renderJournal(){
+  const wrap = document.getElementById('journalList');
+  let all = [];
+  Object.entries(data.exercises).forEach(([name, ex]) => {
+    ex.logs.forEach(log => all.push({ exo:name, ...log }));
+  });
+  if(!all.length){
+    wrap.innerHTML = '<div class="empty-state">Aucune séance enregistrée encore.</div>';
+    return;
+  }
+  all.sort((a,b) => (b.ts||0) - (a.ts||0));
+  wrap.innerHTML = all.map(l => `
+    <div class="journal-entry">
+      <div>
+        <div class="journal-exo">${escapeHtml(l.exo)}</div>
+        <div class="journal-date">${formatDate(l.date)}</div>
+      </div>
+      <div class="journal-stats">
+        <div class="journal-perf">${l.perf}${l.reps > 1 ? ' × ' + l.reps : ''}</div>
+        <div class="journal-xp">+${l.xpGain} XP</div>
+      </div>
+    </div>
+  `).join('');
+}
+function formatDate(d){
+  const dt = new Date(d + 'T00:00:00');
+  if(isNaN(dt)) return d;
+  return dt.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+/* ---------- Render: Succès tab ---------- */
+function renderAchievements(){
+  const wrap = document.getElementById('achList');
+  function cardHtml(a){
+    const unlocked = data.achievementsUnlocked.includes(a.id);
+    let tag = '';
+    if(a.tier) tag = `<div class="ach-tier-tag">Rang ${a.tier}</div>`;
+    else if(a.exo) tag = `<div class="ach-tier-tag">${escapeHtml(a.exo)} • ${a.minPerf}+</div>`;
+    return `
+      <div class="ach-card ${unlocked ? 'unlocked' : ''}">
+        <div class="ach-icon">${a.icon}</div>
+        <div class="ach-info">
+          <div class="ach-title">${a.title}</div>
+          <div class="ach-desc">${a.desc}</div>
+          ${tag}
+        </div>
+      </div>`;
+  }
+  const rangAch = ACHIEVEMENTS.filter(a => a.category === 'rang');
+  const exploitAch = ACHIEVEMENTS.filter(a => a.category === 'exploit');
+  wrap.innerHTML =
+    '<div class="ach-section-label">Succès de rang</div>' +
+    rangAch.map(cardHtml).join('') +
+    '<div class="ach-section-label">Succès d\'exploit</div>' +
+    exploitAch.map(cardHtml).join('');
+}
+
+/* ---------- Render: Profil tab ---------- */
+function renderProfil(){
+  const totalXP = getTotalXP();
+  const info = getLevelInfo(totalXP);
+  document.getElementById('profilLevelNum').textContent = info.level;
+  document.getElementById('statSessions').textContent = data.totalSessions;
+  document.getElementById('statExos').textContent = Object.keys(data.exercises).length;
+  document.getElementById('statLegendes').textContent =
+    Object.values(data.exercises).filter(e => getRank(e.xp).name === 'Légende').length;
+  document.getElementById('statAchUnlocked').textContent =
+    data.achievementsUnlocked.length + ' / ' + ACHIEVEMENTS.length;
+}
+
+/* ---------- Global XP bar (always visible, top) ---------- */
+function renderGlobalBar(){
+  const totalXP = getTotalXP();
+  const info = getLevelInfo(totalXP);
+  document.getElementById('globalLevelLabel').textContent = `Niveau ${info.level}`;
+  document.getElementById('globalXpLabel').textContent = `${info.current} / ${info.needed} XP`;
+  const pct = Math.round((info.current / info.needed) * 100);
+  document.getElementById('globalXpFill').style.width = pct + '%';
+}
+
+/* ---------- Achievements unlock ---------- */
+function unlockAchievement(id){
+  if(data.achievementsUnlocked.includes(id)) return;
+  const ach = ACHIEVEMENTS.find(a => a.id === id);
+  if(!ach) return;
+  data.achievementsUnlocked.push(id);
+  saveData();
+  showAchModal(ach);
+}
+function showAchModal(ach){
+  document.getElementById('achModalIcon').textContent = ach.icon;
+  document.getElementById('achModalTitle').textContent = ach.title;
+  document.getElementById('achModalDesc').textContent = ach.desc;
+  document.getElementById('achModal').classList.add('show');
+  playFlash();
+}
+function closeAchModal(){
+  document.getElementById('achModal').classList.remove('show');
+}
+
+/* ---------- Toast ---------- */
+function toast(msg){
+  const wrap = document.getElementById('toast-wrap');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => t.remove(), 2700);
+}
+
+/* ---------- Animations ---------- */
+function playFlash(){
+  const el = document.getElementById('flashOverlay');
+  el.classList.remove('play');
+  void el.offsetWidth;
+  el.classList.add('play');
+}
+
+function triggerRankUp(exoName, rankName){
+  // big light burst
+  const burst = document.getElementById('rankupOverlay');
+  burst.classList.remove('play');
+  void burst.offsetWidth;
+  burst.classList.add('play');
+
+  // dragon flight across screen
+  const dragon = document.getElementById('dragonFly');
+  dragon.classList.remove('play');
+  void dragon.offsetWidth;
+  dragon.classList.add('play');
+
+  // sparks radiating from center
+  spawnSparks();
+
+  toast(`Rang ${rankName} atteint — ${exoName} !`);
+}
+
+function spawnSparks(){
+  const count = 14;
+  for(let i=0;i<count;i++){
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const angle = (Math.PI * 2 * i) / count;
+    const dist = 120 + Math.random()*100;
+    s.style.setProperty('--dx', Math.cos(angle)*dist + 'px');
+    s.style.setProperty('--dy', Math.sin(angle)*dist + 'px');
+    document.body.appendChild(s);
+    requestAnimationFrame(() => s.classList.add('play'));
+    setTimeout(() => s.remove(), 1000);
+  }
+}
+
+/* ---------- Utils ---------- */
+function escapeHtml(str){
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+/* ---------- Init ---------- */
+function initApp(){
+  document.getElementById('dateInput').value = new Date().toISOString().slice(0,10);
+  refreshExoSelect();
+  renderGlobalBar();
+  renderRangs();
+  renderJournal();
+  renderAchievements();
+  renderProfil();
+}
+
+// re-render global bar whenever data changes
+const _origSave = saveData;
+saveData = function(){ _origSave(); renderGlobalBar(); };
+
+initApp();
+</script>
+
+
+
+</body></html>
